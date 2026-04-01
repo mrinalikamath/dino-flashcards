@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dino Flash Cards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      height: 100dvh;
+      background: #e4e0d8;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+    }
+
+    .stack-wrapper {
+      position: relative;
+      /* width drives size; capped by viewport width AND by viewport height via aspect ratio */
+      width: min(
+        320px,
+        calc(100vw - 48px),
+        calc((100svh - 80px) * 320 / 500)
+      );
+      aspect-ratio: 320 / 500;
+      flex-shrink: 0;
+    }
+
+    /* All 4 card scenes share the same footprint */
+    .scene {
+      position: absolute;
+      inset: 0;
+      perspective: 900px;
+      cursor: pointer;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card.flipped { transform: rotateY(180deg); }
+
+    .face {
+      position: absolute;
+      inset: 0;
+      border-radius: 36px;
+      backface-visibility: hidden;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    /* Front face */
+    .front {
+      background: #1c1917;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 20px 22px;
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .card-icon { font-size: 1.4rem; line-height: 1; opacity: 0.9; }
+
+    .flip-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #c49a4a;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #fff;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .flip-btn:hover { background: #b08838; }
+
+    .animal-name {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      line-height: 1.05;
+      flex-shrink: 0;
+      text-align: center;
+      margin-bottom: 14px;
+      word-break: break-word;
+    }
+    .animal-name.name-long   { font-size: 1.55rem; }
+    .animal-name.name-medium { font-size: 1.8rem; }
+
+    .card-img-box {
+      flex: 1;
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: 0;
+      position: relative;
+    }
+
+    .animal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .animal-img.pos-left   { object-position: left center; }
+    .animal-img.pos-right  { object-position: right center; }
+    .animal-img.pos-top    { object-position: center top; }
+    .animal-img.pos-bottom { object-position: center bottom; }
+
+    /* Back face */
+    .back {
+      background: #1c1917;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 36px 28px;
+    }
+
+    .fact-icon  { font-size: 2.2rem; margin-bottom: 14px; }
+
+    .fact-label {
+      font-size: 0.65rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 16px;
+    }
+
+    .fact-text {
+      font-size: 1.05rem;
+      color: #fff;
+      text-align: center;
+      line-height: 1.72;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="stack-wrapper" id="stack">
+
+    <!-- Slot D (starts as behind-3, furthest back) -->
+    <div class="scene" id="scene-d">
+      <div class="card" id="card-d">
+        <div class="face front">
+          <div class="card-top-row">
+            <span class="card-icon" id="icon-d">🦕</span>
+            <button class="flip-btn" id="flip-d">↗</button>
+          </div>
+          <div class="animal-name" id="name-d"></div>
+          <div class="card-img-box"><img class="animal-img" id="img-d" src="" alt="" /></div>
+        </div>
+        <div class="face back">
+          <div class="fact-icon">💡</div>
+          <div class="fact-label">Fun Fact</div>
+          <div class="fact-text" id="fact-d"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slot C (starts as behind-2) -->
+    <div class="scene" id="scene-c">
+      <div class="card" id="card-c">
+        <div class="face front">
+          <div class="card-top-row">
+            <span class="card-icon" id="icon-c">🦕</span>
+            <button class="flip-btn" id="flip-c">↗</button>
+          </div>
+          <div class="animal-name" id="name-c"></div>
+          <div class="card-img-box"><img class="animal-img" id="img-c" src="" alt="" /></div>
+        </div>
+        <div class="face back">
+          <div class="fact-icon">💡</div>
+          <div class="fact-label">Fun Fact</div>
+          <div class="fact-text" id="fact-c"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slot B (starts as behind-1) -->
+    <div class="scene" id="scene-b">
+      <div class="card" id="card-b">
+        <div class="face front">
+          <div class="card-top-row">
+            <span class="card-icon" id="icon-b">🦕</span>
+            <button class="flip-btn" id="flip-b">↗</button>
+          </div>
+          <div class="animal-name" id="name-b"></div>
+          <div class="card-img-box"><img class="animal-img" id="img-b" src="" alt="" /></div>
+        </div>
+        <div class="face back">
+          <div class="fact-icon">💡</div>
+          <div class="fact-label">Fun Fact</div>
+          <div class="fact-text" id="fact-b"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slot A (starts as front) -->
+    <div class="scene" id="scene-a">
+      <div class="card" id="card-a">
+        <div class="face front">
+          <div class="card-top-row">
+            <span class="card-icon" id="icon-a">🦕</span>
+            <button class="flip-btn" id="flip-a">↗</button>
+          </div>
+          <div class="animal-name" id="name-a"></div>
+          <div class="card-img-box"><img class="animal-img" id="img-a" src="" alt="" /></div>
+        </div>
+        <div class="face back">
+          <div class="fact-icon">💡</div>
+          <div class="fact-label">Fun Fact</div>
+          <div class="fact-text" id="fact-a"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const animals = [
+      { name: "T. Rex",             image: "images/trex.jpg",             imgClass: "pos-right",  icon: "🦖", fact: "T. rex had 60 banana-sized teeth and the most powerful bite of any land animal ever — but its arms were so tiny it couldn't even reach its own mouth! Scientists now think it may have been covered in feathers." },
+      { name: "Triceratops",        image: "images/triceratops.jpg",      imgClass: "pos-right",  icon: "🦕", fact: "Triceratops had a skull the size of a car hood — one of the largest heads of any land animal ever! Its three horns could grow a meter long, and it used them to fight T. rex face to face." },
+      { name: "Stegosaurus",        image: "images/stegosaurus.png",      imgClass: "pos-left",   icon: "🛡️", fact: "Stegosaurus had a brain the size of a walnut — one of the smallest brain-to-body ratios ever. Its tail spikes were so deadly palaeontologists named them the 'thagomizer' after a Far Side cartoon." },
+      { name: "Diplodocus",         image: "images/diplodocus.jpg",       imgClass: "pos-top",    icon: "🦕", fact: "Diplodocus was longer than two school buses parked end to end! Scientists think it could crack its tail like a whip so fast it broke the sound barrier — creating a dinosaur sonic boom." },
+      { name: "Velociraptor",       image: "images/velociraptor.png",     imgClass: "pos-right",  icon: "🦖", fact: "Real velociraptors were only the size of a turkey and covered in feathers — far less scary than the movies! They may have used their famous sickle claw to pin prey, not slash it." },
+      { name: "Spinosaurus",        image: "images/spinosaurus.png",      imgClass: "pos-left",   icon: "🦖", fact: "Spinosaurus was bigger than T. rex and could swim! Its sail-like back spines stood as tall as a person, and it had crocodile-like jaws built for snatching fish straight out of the water." },
+      { name: "Ankylosaurus",       image: "images/ankylosaurus.jpg",     imgClass: "pos-right",  icon: "🛡️", fact: "Ankylosaurus was a living tank — its entire back was covered in thick armour plates, even its eyelids! Its solid-bone tail club could swing hard enough to shatter another dinosaur's legs." },
+      { name: "Pteranodon",         image: "images/pteranodon.png",                               icon: "🦅", fact: "Pteranodon wasn't a dinosaur — it was a flying reptile with a wingspan wider than a minivan! Despite having no teeth at all, it scooped fish mid-flight using its huge toothless beak." },
+      { name: "Pachycephalosaurus", image: "images/pachycephalosaurus.jpg", imgClass: "pos-right", icon: "💀", fact: "Pachycephalosaurus had a dome skull up to 25 cm thick — like wearing a bowling ball as a hat. Scientists are still arguing about whether it headbutted rivals or just used its head for show." },
+      { name: "Parasaurolophus",    image: "images/parasaurolophus.png",  imgClass: "pos-right",  icon: "📯", fact: "The long hollow crest on Parasaurolophus worked like a trombone! Scientists have recreated its call — a deep, haunting moan that could travel for kilometres through prehistoric forests." },
+      { name: "Therizinosaurus",    image: "images/therizinosaurus.jpg",  imgClass: "pos-top",    icon: "✂️", fact: "Therizinosaurus had the longest claws of any animal ever — up to a meter long, like giant garden rakes. Despite looking terrifying, this enormous dinosaur was a gentle vegetarian!" },
+      { name: "Carnotaurus",        image: "images/carnotaurus.jpg",      imgClass: "pos-left",   icon: "🐂", fact: "Carnotaurus was possibly the fastest large predator ever — it could sprint at around 56 km/h! It also had two bull-like horns above its eyes, making it look like a dinosaur devil." },
+      { name: "Allosaurus",         image: "images/allosaurus.png",       imgClass: "pos-left",   icon: "🦖", fact: "Allosaurus was the T. rex of the Jurassic — 150 million years before T. rex even existed! Its jaw could open nearly 80 degrees wide, and it may have hunted in packs to take down sauropods ten times its size." },
+      { name: "Archaeopteryx",      image: "images/archaeopteryx.png",    imgClass: "pos-left",   icon: "🐦", fact: "Archaeopteryx is the ultimate missing link between dinosaurs and birds! It had feathers and could fly, but also had teeth, wing claws, and a long bony tail — the perfect half-dinosaur, half-bird." },
+      { name: "Microraptor",        image: "images/microraptor.png",                              icon: "🪶", fact: "Microraptor had FOUR wings — two on its arms and two on its legs! This crow-sized dinosaur glided between trees 120 million years ago, and it had shimmering iridescent feathers like a hummingbird." },
+      { name: "Deinonychus",        image: "images/deinonychus.png",      imgClass: "pos-top",    icon: "🦖", fact: "Deinonychus was the real inspiration for Jurassic Park's velociraptors — the movie just renamed them! It hunted in coordinated packs, using its giant sickle claw to pin prey while its jaws did the damage." },
+      { name: "Mosasaurus",         image: "images/mosasaurus.jpg",       imgClass: "pos-right",  icon: "🌊", fact: "Mosasaurus was a giant swimming lizard — not a dinosaur — up to 17 metres long. It ruled the oceans 66 million years ago, eating sharks and anything else it liked, then went extinct alongside the dinos." },
+      { name: "Iguanodon",          image: "images/iguanodon.jpg",        imgClass: "pos-right",  icon: "🦎", fact: "Iguanodon was one of the very first dinosaurs ever discovered. Scientists were so confused by its spiked thumb bone they glued it onto its nose like a rhino horn — an embarrassing mistake that lasted years!" },
+      { name: "Oviraptor",          image: "images/oviraptor.jpg",        imgClass: "pos-right",  icon: "🥚", fact: "Oviraptor means 'egg thief' — but it was completely innocent! The skeleton found near eggs was actually sitting on its OWN nest, keeping them warm like a bird, not stealing from anyone." },
+      { name: "Dilophosaurus",      image: "images/dilophosaurus.jpg",    imgClass: "pos-left",   icon: "🎭", fact: "The real Dilophosaurus was twice the size of the one in Jurassic Park! There is zero fossil evidence it spat venom or had a neck frill — those were entirely made up. The filmmakers just wanted it to be scarier." },
+    ];
+
+    const N = animals.length;
+    const wrap = i => ((i % N) + N) % N;
+
+    // Y offsets and opacities per position index
+    const OFFSETS  = [0, 6, 12, 18];       // translateY px per position
+    const OPACITIES = ['1', '0.82', '0.56', '0']; // pos 3 starts invisible
+    const Z_IDX     = ['4', '3', '2', '1'];
+
+    const SLOTS = ['a', 'b', 'c', 'd'];
+    const slots = {};
+    SLOTS.forEach(k => {
+      slots[k] = {
+        scene:   document.getElementById(`scene-${k}`),
+        card:    document.getElementById(`card-${k}`),
+        img:     document.getElementById(`img-${k}`),
+        name:    document.getElementById(`name-${k}`),
+        icon:    document.getElementById(`icon-${k}`),
+        fact:    document.getElementById(`fact-${k}`),
+        flipBtn: document.getElementById(`flip-${k}`),
+        tilt:    0,   // persistent tilt angle in degrees
+      };
+    });
+
+    // positions[i] = which slot key is at position i (0=front … 3=furthest behind)
+    let positions = ['a', 'b', 'c', 'd'];
+    let current   = 0;
+    let isAnimating = false;
+
+    // Random tilt: 3–8 deg, always has a direction (never near 0)
+    function randomTilt() {
+      const mag = 3 + Math.random() * 5;
+      return (Math.random() < 0.5 ? -1 : 1) * mag;
+    }
+
+    function setScene(key, tilt, posIdx, transition = 'none') {
+      const s = slots[key].scene;
+      s.style.transition = transition;
+      s.style.transform  = `rotate(${tilt}deg) translateY(${OFFSETS[posIdx]}px)`;
+      s.style.opacity    = OPACITIES[posIdx];
+      s.style.zIndex     = Z_IDX[posIdx];
+    }
+
+    function loadSlot(key, animalIdx) {
+      const a  = animals[animalIdx];
+      const sl = slots[key];
+      sl.img.src          = a.image + '?v=' + animalIdx;
+      sl.img.className    = 'animal-img' + (a.imgClass ? ' ' + a.imgClass : '');
+      sl.img.alt          = a.name;
+      sl.name.textContent = a.name;
+      sl.name.className   = 'animal-name' + (a.name.length > 13 ? ' name-long' : a.name.length > 9 ? ' name-medium' : '');
+      sl.icon.textContent = a.icon || '🦖';
+      sl.fact.textContent = a.fact;
+    }
+
+    function goTo(nextIdx) {
+      if (isAnimating) return;
+      isAnimating = true;
+      current = nextIdx;
+
+      const EASE_DROP = 'transform 0.40s cubic-bezier(0.55,0,1,0.7), opacity 0.28s ease';
+      const EASE_RISE = 'transform 0.44s cubic-bezier(0.18,0,0.35,1), opacity 0.36s ease';
+
+      // Unflip the departing front card
+      slots[positions[0]].card.classList.remove('flipped');
+
+      // 1. Front card drops away
+      const s0 = slots[positions[0]].scene;
+      s0.style.transition = EASE_DROP;
+      s0.style.transform  = 'translateY(115%) rotate(6deg)';
+      s0.style.opacity    = '0';
+
+      // 2. behind-1 → front: animate its tilt to 0 (straighten)
+      setScene(positions[1], 0, 0, EASE_RISE);
+
+      // 3. behind-2 → behind-1: keeps its tilt, just moves up + more opaque
+      setScene(positions[2], slots[positions[2]].tilt, 1, EASE_RISE);
+
+      // 4. behind-3 → behind-2: keeps its tilt, FADES IN (was opacity 0)
+      setScene(positions[3], slots[positions[3]].tilt, 2, EASE_RISE);
+
+      setTimeout(() => {
+        const dropped = positions.shift();
+        positions.push(dropped);
+
+        // Dropped card: new random tilt, snap to behind-3 (invisible), load next animal
+        const newTilt = randomTilt();
+        slots[dropped].tilt = newTilt;
+        slots[dropped].card.classList.remove('flipped');
+        setScene(dropped, newTilt, 3); // instant, opacity 0
+        loadSlot(dropped, wrap(current + 3));
+
+        // Mark new front's tilt as 0
+        slots[positions[0]].tilt = 0;
+
+        // Clear transitions so CSS card-flip works normally
+        positions.forEach(k => { slots[k].scene.style.transition = ''; });
+
+        isAnimating = false;
+      }, 450);
+    }
+
+    // Click / flip wiring for all slots
+    let wasDrag = false; // suppress click-to-flip when a drag just ended
+    SLOTS.forEach(k => {
+      slots[k].card.addEventListener('click', e => {
+        if (positions[0] !== k) return;
+        if (wasDrag) return;
+        if (!e.target.closest('.flip-btn')) slots[k].card.classList.toggle('flipped');
+      });
+      slots[k].flipBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (positions[0] !== k) return;
+        slots[k].card.classList.toggle('flipped');
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') goTo(wrap(current + 1));
+      if (e.key === 'ArrowLeft')  goTo(wrap(current - 1));
+      if (e.key === ' ' || e.key === 'Enter') slots[positions[0]].card.classList.toggle('flipped');
+    });
+
+    // ── Drag to dismiss ─────────────────────────────────────────────────────────
+    let dragStartX = 0, dragStartY = 0;
+    let dragActive = false; // true once finger has moved enough to start drag
+    let dragSlotKey = null; // which slot is being dragged
+    let dragDx = 0, dragDy = 0;
+
+    const DISMISS_THRESHOLD = 100; // px horizontal to trigger dismiss
+
+    document.addEventListener('touchstart', e => {
+      if (isAnimating) return;
+      dragStartX  = e.touches[0].clientX;
+      dragStartY  = e.touches[0].clientY;
+      dragActive  = false;
+      dragDx = 0; dragDy = 0;
+      dragSlotKey = positions[0];
+    }, { passive: true });
+
+    document.addEventListener('touchmove', e => {
+      if (isAnimating || !dragSlotKey) return;
+      const dx = e.touches[0].clientX - dragStartX;
+      const dy = e.touches[0].clientY - dragStartY;
+
+      if (!dragActive) {
+        if (Math.hypot(dx, dy) < 6) return; // wait for real movement
+        dragActive = true;
+      }
+
+      dragDx = dx;
+      dragDy = dy;
+
+      // Card follows finger: tilts in drag direction, slight vertical follow
+      const rotate = (dx / 200) * 18;
+      const s = slots[dragSlotKey].scene;
+      s.style.transition = 'none';
+      s.style.transform  = `translate(${dx}px, ${dy * 0.3}px) rotate(${rotate}deg)`;
+      s.style.zIndex     = '10'; // stay above other cards while dragging
+
+      e.preventDefault(); // prevent browser scroll / rubber-band
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => {
+      if (!dragActive || !dragSlotKey) {
+        dragSlotKey = null;
+        return;
+      }
+      dragActive = false;
+
+      const dx  = dragDx;
+      const dy  = dragDy;
+      const key = dragSlotKey;
+      dragSlotKey = null;
+
+      // Suppress the click event that fires immediately after touchend
+      if (Math.abs(dx) > 8) {
+        wasDrag = true;
+        setTimeout(() => { wasDrag = false; }, 100);
+      }
+
+      if (Math.abs(dx) > DISMISS_THRESHOLD) {
+        // ── Dismiss: fly the card off-screen, then cycle the deck ──────────────
+        isAnimating = true;
+        current = wrap(current + 1);
+
+        const dir = dx > 0 ? 1 : -1;
+        const s0  = slots[key].scene;
+        s0.style.transition = 'transform 0.35s cubic-bezier(0.55,0,1,0.7), opacity 0.25s ease';
+        s0.style.transform  = `translate(${dir * window.innerWidth * 1.3}px, ${dy * 0.3}px) rotate(${dir * 25}deg)`;
+        s0.style.opacity    = '0';
+        s0.style.zIndex     = Z_IDX[0];
+        slots[key].card.classList.remove('flipped');
+
+        // Rise the behind cards at the same moment
+        const EASE_RISE = 'transform 0.44s cubic-bezier(0.18,0,0.35,1), opacity 0.36s ease';
+        setScene(positions[1], 0,                      0, EASE_RISE);
+        setScene(positions[2], slots[positions[2]].tilt, 1, EASE_RISE);
+        setScene(positions[3], slots[positions[3]].tilt, 2, EASE_RISE);
+
+        setTimeout(() => {
+          const dropped = positions.shift();
+          positions.push(dropped);
+          const newTilt = randomTilt();
+          slots[dropped].tilt = newTilt;
+          slots[dropped].card.classList.remove('flipped');
+          setScene(dropped, newTilt, 3);
+          loadSlot(dropped, wrap(current + 3));
+          slots[positions[0]].tilt = 0;
+          positions.forEach(k => { slots[k].scene.style.transition = ''; });
+          isAnimating = false;
+        }, 450);
+
+      } else {
+        // ── Snap back with a springy feel ──────────────────────────────────────
+        const s = slots[key].scene;
+        s.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)';
+        s.style.transform  = `rotate(0deg) translateY(0px)`;
+        s.style.zIndex     = Z_IDX[0];
+      }
+    }, { passive: true });
+
+    // ── Initial setup ──────────────────────────────────────────────────────────
+    // Front (pos 0) is straight; pos 1–3 get random tilts; pos 3 is invisible
+    positions.forEach((k, i) => {
+      const tilt = (i === 0) ? 0 : randomTilt();
+      slots[k].tilt = tilt;
+      setScene(k, tilt, i); // instant, no transition
+      loadSlot(k, wrap(i));
+    });
+  </script>
+</body>
+</html>
