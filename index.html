@@ -81,7 +81,7 @@
 
     .card-icon { font-size: 1.4rem; line-height: 1; opacity: 0.9; }
 
-    .flip-btn {
+    .pronounce-btn {
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -91,12 +91,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1rem;
       color: #fff;
       flex-shrink: 0;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
     }
-    .flip-btn:hover { background: #b08838; }
+    .pronounce-btn:hover { background: #b08838; }
+    .pronounce-btn.speaking {
+      background: #b08838;
+      animation: pulse-speak 0.55s ease-in-out infinite alternate;
+    }
+    @keyframes pulse-speak {
+      from { transform: scale(1); }
+      to   { transform: scale(1.18); }
+    }
 
     .animal-name {
       font-size: 2.1rem;
@@ -174,7 +181,7 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-d">🦕</span>
-            <button class="flip-btn" id="flip-d">↗</button>
+            <button class="pronounce-btn" id="pronounce-d" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
           <div class="animal-name" id="name-d"></div>
           <div class="card-img-box"><img class="animal-img" id="img-d" src="" alt="" /></div>
@@ -193,7 +200,7 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-c">🦕</span>
-            <button class="flip-btn" id="flip-c">↗</button>
+            <button class="pronounce-btn" id="pronounce-c" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
           <div class="animal-name" id="name-c"></div>
           <div class="card-img-box"><img class="animal-img" id="img-c" src="" alt="" /></div>
@@ -212,7 +219,7 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-b">🦕</span>
-            <button class="flip-btn" id="flip-b">↗</button>
+            <button class="pronounce-btn" id="pronounce-b" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
           <div class="animal-name" id="name-b"></div>
           <div class="card-img-box"><img class="animal-img" id="img-b" src="" alt="" /></div>
@@ -231,7 +238,7 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-a">🦕</span>
-            <button class="flip-btn" id="flip-a">↗</button>
+            <button class="pronounce-btn" id="pronounce-a" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
           <div class="animal-name" id="name-a"></div>
           <div class="card-img-box"><img class="animal-img" id="img-a" src="" alt="" /></div>
@@ -248,26 +255,26 @@
 
   <script>
     const animals = [
-      { name: "T. Rex",             image: "images/trex.jpg",             imgClass: "pos-right",  icon: "🦖", fact: "T. rex had 60 banana-sized teeth and the most powerful bite of any land animal ever — but its arms were so tiny it couldn't even reach its own mouth! Scientists now think it may have been covered in feathers." },
-      { name: "Triceratops",        image: "images/triceratops.jpg",      imgClass: "pos-right",  icon: "🦕", fact: "Triceratops had a skull the size of a car hood — one of the largest heads of any land animal ever! Its three horns could grow a meter long, and it used them to fight T. rex face to face." },
-      { name: "Stegosaurus",        image: "images/stegosaurus.png",      imgClass: "pos-left",   icon: "🛡️", fact: "Stegosaurus had a brain the size of a walnut — one of the smallest brain-to-body ratios ever. Its tail spikes were so deadly palaeontologists named them the 'thagomizer' after a Far Side cartoon." },
-      { name: "Diplodocus",         image: "images/diplodocus.jpg",       imgClass: "pos-top",    icon: "🦕", fact: "Diplodocus was longer than two school buses parked end to end! Scientists think it could crack its tail like a whip so fast it broke the sound barrier — creating a dinosaur sonic boom." },
-      { name: "Velociraptor",       image: "images/velociraptor.png",     imgClass: "pos-right",  icon: "🦖", fact: "Real velociraptors were only the size of a turkey and covered in feathers — far less scary than the movies! They may have used their famous sickle claw to pin prey, not slash it." },
-      { name: "Spinosaurus",        image: "images/spinosaurus.png",      imgClass: "pos-left",   icon: "🦖", fact: "Spinosaurus was bigger than T. rex and could swim! Its sail-like back spines stood as tall as a person, and it had crocodile-like jaws built for snatching fish straight out of the water." },
-      { name: "Ankylosaurus",       image: "images/ankylosaurus.jpg",     imgClass: "pos-right",  icon: "🛡️", fact: "Ankylosaurus was a living tank — its entire back was covered in thick armour plates, even its eyelids! Its solid-bone tail club could swing hard enough to shatter another dinosaur's legs." },
-      { name: "Pteranodon",         image: "images/pteranodon.png",                               icon: "🦅", fact: "Pteranodon wasn't a dinosaur — it was a flying reptile with a wingspan wider than a minivan! Despite having no teeth at all, it scooped fish mid-flight using its huge toothless beak." },
-      { name: "Pachycephalosaurus", image: "images/pachycephalosaurus.jpg", imgClass: "pos-right", icon: "💀", fact: "Pachycephalosaurus had a dome skull up to 25 cm thick — like wearing a bowling ball as a hat. Scientists are still arguing about whether it headbutted rivals or just used its head for show." },
-      { name: "Parasaurolophus",    image: "images/parasaurolophus.png",  imgClass: "pos-right",  icon: "📯", fact: "The long hollow crest on Parasaurolophus worked like a trombone! Scientists have recreated its call — a deep, haunting moan that could travel for kilometres through prehistoric forests." },
-      { name: "Therizinosaurus",    image: "images/therizinosaurus.jpg",  imgClass: "pos-top",    icon: "✂️", fact: "Therizinosaurus had the longest claws of any animal ever — up to a meter long, like giant garden rakes. Despite looking terrifying, this enormous dinosaur was a gentle vegetarian!" },
-      { name: "Carnotaurus",        image: "images/carnotaurus.jpg",      imgClass: "pos-left",   icon: "🐂", fact: "Carnotaurus was possibly the fastest large predator ever — it could sprint at around 56 km/h! It also had two bull-like horns above its eyes, making it look like a dinosaur devil." },
-      { name: "Allosaurus",         image: "images/allosaurus.png",       imgClass: "pos-left",   icon: "🦖", fact: "Allosaurus was the T. rex of the Jurassic — 150 million years before T. rex even existed! Its jaw could open nearly 80 degrees wide, and it may have hunted in packs to take down sauropods ten times its size." },
-      { name: "Archaeopteryx",      image: "images/archaeopteryx.png",    imgClass: "pos-left",   icon: "🐦", fact: "Archaeopteryx is the ultimate missing link between dinosaurs and birds! It had feathers and could fly, but also had teeth, wing claws, and a long bony tail — the perfect half-dinosaur, half-bird." },
-      { name: "Microraptor",        image: "images/microraptor.png",                              icon: "🪶", fact: "Microraptor had FOUR wings — two on its arms and two on its legs! This crow-sized dinosaur glided between trees 120 million years ago, and it had shimmering iridescent feathers like a hummingbird." },
-      { name: "Deinonychus",        image: "images/deinonychus.png",      imgClass: "pos-top",    icon: "🦖", fact: "Deinonychus was the real inspiration for Jurassic Park's velociraptors — the movie just renamed them! It hunted in coordinated packs, using its giant sickle claw to pin prey while its jaws did the damage." },
-      { name: "Mosasaurus",         image: "images/mosasaurus.jpg",       imgClass: "pos-right",  icon: "🌊", fact: "Mosasaurus was a giant swimming lizard — not a dinosaur — up to 17 metres long. It ruled the oceans 66 million years ago, eating sharks and anything else it liked, then went extinct alongside the dinos." },
-      { name: "Iguanodon",          image: "images/iguanodon.jpg",        imgClass: "pos-right",  icon: "🦎", fact: "Iguanodon was one of the very first dinosaurs ever discovered. Scientists were so confused by its spiked thumb bone they glued it onto its nose like a rhino horn — an embarrassing mistake that lasted years!" },
-      { name: "Oviraptor",          image: "images/oviraptor.jpg",        imgClass: "pos-right",  icon: "🥚", fact: "Oviraptor means 'egg thief' — but it was completely innocent! The skeleton found near eggs was actually sitting on its OWN nest, keeping them warm like a bird, not stealing from anyone." },
-      { name: "Dilophosaurus",      image: "images/dilophosaurus.jpg",    imgClass: "pos-left",   icon: "🎭", fact: "The real Dilophosaurus was twice the size of the one in Jurassic Park! There is zero fossil evidence it spat venom or had a neck frill — those were entirely made up. The filmmakers just wanted it to be scarier." },
+      { name: "T. Rex",             phonetic: "Tee Rex",                        image: "images/trex.jpg",             imgClass: "pos-right",  icon: "🦖", fact: "T. rex had 60 banana-sized teeth and the most powerful bite of any land animal ever — but its arms were so tiny it couldn't even reach its own mouth! Scientists now think it may have been covered in feathers." },
+      { name: "Triceratops",        phonetic: "Try-SERR-ah-tops",               image: "images/triceratops.jpg",      imgClass: "pos-right",  icon: "🦕", fact: "Triceratops had a skull the size of a car hood — one of the largest heads of any land animal ever! Its three horns could grow a meter long, and it used them to fight T. rex face to face." },
+      { name: "Stegosaurus",        phonetic: "STEG-oh-sore-us",                image: "images/stegosaurus.png",      imgClass: "pos-left",   icon: "🛡️", fact: "Stegosaurus had a brain the size of a walnut — one of the smallest brain-to-body ratios ever. Its tail spikes were so deadly palaeontologists named them the 'thagomizer' after a Far Side cartoon." },
+      { name: "Diplodocus",         phonetic: "Dih-PLOD-oh-kus",                image: "images/diplodocus.jpg",       imgClass: "pos-top",    icon: "🦕", fact: "Diplodocus was longer than two school buses parked end to end! Scientists think it could crack its tail like a whip so fast it broke the sound barrier — creating a dinosaur sonic boom." },
+      { name: "Velociraptor",       phonetic: "Veh-LOSS-ih-rap-tor",            image: "images/velociraptor.png",     imgClass: "pos-right",  icon: "🦖", fact: "Real velociraptors were only the size of a turkey and covered in feathers — far less scary than the movies! They may have used their famous sickle claw to pin prey, not slash it." },
+      { name: "Spinosaurus",        phonetic: "SPY-no-sore-us",                 image: "images/spinosaurus.png",      imgClass: "pos-left",   icon: "🦖", fact: "Spinosaurus was bigger than T. rex and could swim! Its sail-like back spines stood as tall as a person, and it had crocodile-like jaws built for snatching fish straight out of the water." },
+      { name: "Ankylosaurus",       phonetic: "AN-kih-lo-sore-us",              image: "images/ankylosaurus.jpg",     imgClass: "pos-right",  icon: "🛡️", fact: "Ankylosaurus was a living tank — its entire back was covered in thick armour plates, even its eyelids! Its solid-bone tail club could swing hard enough to shatter another dinosaur's legs." },
+      { name: "Pteranodon",         phonetic: "Teh-RAN-oh-don",                 image: "images/pteranodon.png",                               icon: "🦅", fact: "Pteranodon wasn't a dinosaur — it was a flying reptile with a wingspan wider than a minivan! Despite having no teeth at all, it scooped fish mid-flight using its huge toothless beak." },
+      { name: "Pachycephalosaurus", phonetic: "Pack-ee-SEF-ah-lo-sore-us",      image: "images/pachycephalosaurus.jpg", imgClass: "pos-right", icon: "💀", fact: "Pachycephalosaurus had a dome skull up to 25 cm thick — like wearing a bowling ball as a hat. Scientists are still arguing about whether it headbutted rivals or just used its head for show." },
+      { name: "Parasaurolophus",    phonetic: "Para-saw-ROL-oh-fus",            image: "images/parasaurolophus.png",  imgClass: "pos-right",  icon: "📯", fact: "The long hollow crest on Parasaurolophus worked like a trombone! Scientists have recreated its call — a deep, haunting moan that could travel for kilometres through prehistoric forests." },
+      { name: "Therizinosaurus",    phonetic: "Theh-RIZ-in-oh-sore-us",         image: "images/therizinosaurus.jpg",  imgClass: "pos-top",    icon: "✂️", fact: "Therizinosaurus had the longest claws of any animal ever — up to a meter long, like giant garden rakes. Despite looking terrifying, this enormous dinosaur was a gentle vegetarian!" },
+      { name: "Carnotaurus",        phonetic: "Car-no-TORE-us",                 image: "images/carnotaurus.jpg",      imgClass: "pos-left",   icon: "🐂", fact: "Carnotaurus was possibly the fastest large predator ever — it could sprint at around 56 km/h! It also had two bull-like horns above its eyes, making it look like a dinosaur devil." },
+      { name: "Allosaurus",         phonetic: "AL-oh-sore-us",                  image: "images/allosaurus.png",       imgClass: "pos-left",   icon: "🦖", fact: "Allosaurus was the T. rex of the Jurassic — 150 million years before T. rex even existed! Its jaw could open nearly 80 degrees wide, and it may have hunted in packs to take down sauropods ten times its size." },
+      { name: "Archaeopteryx",      phonetic: "Ar-kee-OP-ter-ix",               image: "images/archaeopteryx.png",    imgClass: "pos-left",   icon: "🐦", fact: "Archaeopteryx is the ultimate missing link between dinosaurs and birds! It had feathers and could fly, but also had teeth, wing claws, and a long bony tail — the perfect half-dinosaur, half-bird." },
+      { name: "Microraptor",        phonetic: "MY-kro-rap-tor",                 image: "images/microraptor.png",                              icon: "🪶", fact: "Microraptor had FOUR wings — two on its arms and two on its legs! This crow-sized dinosaur glided between trees 120 million years ago, and it had shimmering iridescent feathers like a hummingbird." },
+      { name: "Deinonychus",        phonetic: "Die-NON-ih-kus",                 image: "images/deinonychus.png",      imgClass: "pos-top",    icon: "🦖", fact: "Deinonychus was the real inspiration for Jurassic Park's velociraptors — the movie just renamed them! It hunted in coordinated packs, using its giant sickle claw to pin prey while its jaws did the damage." },
+      { name: "Mosasaurus",         phonetic: "MOH-zah-sore-us",                image: "images/mosasaurus.jpg",       imgClass: "pos-right",  icon: "🌊", fact: "Mosasaurus was a giant swimming lizard — not a dinosaur — up to 17 metres long. It ruled the oceans 66 million years ago, eating sharks and anything else it liked, then went extinct alongside the dinos." },
+      { name: "Iguanodon",          phonetic: "Ih-GWAH-no-don",                 image: "images/iguanodon.jpg",        imgClass: "pos-right",  icon: "🦎", fact: "Iguanodon was one of the very first dinosaurs ever discovered. Scientists were so confused by its spiked thumb bone they glued it onto its nose like a rhino horn — an embarrassing mistake that lasted years!" },
+      { name: "Oviraptor",          phonetic: "OH-vih-rap-tor",                 image: "images/oviraptor.jpg",        imgClass: "pos-right",  icon: "🥚", fact: "Oviraptor means 'egg thief' — but it was completely innocent! The skeleton found near eggs was actually sitting on its OWN nest, keeping them warm like a bird, not stealing from anyone." },
+      { name: "Dilophosaurus",      phonetic: "Die-LOH-fo-sore-us",             image: "images/dilophosaurus.jpg",    imgClass: "pos-left",   icon: "🎭", fact: "The real Dilophosaurus was twice the size of the one in Jurassic Park! There is zero fossil evidence it spat venom or had a neck frill — those were entirely made up. The filmmakers just wanted it to be scarier." },
     ];
 
     const N = animals.length;
@@ -282,14 +289,15 @@
     const slots = {};
     SLOTS.forEach(k => {
       slots[k] = {
-        scene:   document.getElementById(`scene-${k}`),
-        card:    document.getElementById(`card-${k}`),
-        img:     document.getElementById(`img-${k}`),
-        name:    document.getElementById(`name-${k}`),
-        icon:    document.getElementById(`icon-${k}`),
-        fact:    document.getElementById(`fact-${k}`),
-        flipBtn: document.getElementById(`flip-${k}`),
-        tilt:    0,   // persistent tilt angle in degrees
+        scene:        document.getElementById(`scene-${k}`),
+        card:         document.getElementById(`card-${k}`),
+        img:          document.getElementById(`img-${k}`),
+        name:         document.getElementById(`name-${k}`),
+        icon:         document.getElementById(`icon-${k}`),
+        fact:         document.getElementById(`fact-${k}`),
+        pronounceBtn: document.getElementById(`pronounce-${k}`),
+        tilt:         0,   // persistent tilt angle in degrees
+        animalIdx:    0,   // which animal is currently loaded in this slot
       };
     });
 
@@ -315,6 +323,7 @@
     function loadSlot(key, animalIdx) {
       const a  = animals[animalIdx];
       const sl = slots[key];
+      sl.animalIdx        = animalIdx;
       sl.img.src          = a.image + '?v=' + animalIdx;
       sl.img.className    = 'animal-img' + (a.imgClass ? ' ' + a.imgClass : '');
       sl.img.alt          = a.name;
@@ -371,18 +380,35 @@
       }, 450);
     }
 
+    // Speak a dinosaur name aloud using the Web Speech API
+    function speakDino(key) {
+      if (!window.speechSynthesis) return;
+      const a    = animals[slots[key].animalIdx];
+      const text = a.phonetic || a.name;
+      const btn  = slots[key].pronounceBtn;
+
+      window.speechSynthesis.cancel();
+      const u   = new SpeechSynthesisUtterance(text);
+      u.rate    = 0.82;
+      u.pitch   = 1.0;
+      u.onstart = () => btn.classList.add('speaking');
+      u.onend   = () => btn.classList.remove('speaking');
+      u.onerror = () => btn.classList.remove('speaking');
+      window.speechSynthesis.speak(u);
+    }
+
     // Click / flip wiring for all slots
     let wasDrag = false; // suppress click-to-flip when a drag just ended
     SLOTS.forEach(k => {
       slots[k].card.addEventListener('click', e => {
         if (positions[0] !== k) return;
         if (wasDrag) return;
-        if (!e.target.closest('.flip-btn')) slots[k].card.classList.toggle('flipped');
+        if (!e.target.closest('.pronounce-btn')) slots[k].card.classList.toggle('flipped');
       });
-      slots[k].flipBtn.addEventListener('click', e => {
+      slots[k].pronounceBtn.addEventListener('click', e => {
         e.stopPropagation();
         if (positions[0] !== k) return;
-        slots[k].card.classList.toggle('flipped');
+        speakDino(k);
       });
     });
 
