@@ -412,21 +412,33 @@
       }, 450);
     }
 
-    // Speak a dinosaur name aloud using the Web Speech API
+    // Speak a dinosaur name — use pre-recorded MP3 if available, else Web Speech API
+    let currentAudio = null;
     function speakDino(key) {
-      if (!window.speechSynthesis) return;
-      const a    = animals[slots[key].animalIdx];
-      const text = a.name;
-      const btn  = slots[key].pronounceBtn;
+      const a   = animals[slots[key].animalIdx];
+      const btn = slots[key].pronounceBtn;
 
-      window.speechSynthesis.cancel();
-      const u   = new SpeechSynthesisUtterance(text);
-      u.rate    = 0.82;
-      u.pitch   = 1.0;
-      u.onstart = () => btn.classList.add('speaking');
-      u.onend   = () => btn.classList.remove('speaking');
-      u.onerror = () => btn.classList.remove('speaking');
-      window.speechSynthesis.speak(u);
+      // Stop any currently playing audio
+      if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+      const audio = new Audio(`audio/${a.name}.mp3`);
+      currentAudio = audio;
+      audio.onplay  = () => btn.classList.add('speaking');
+      audio.onended = () => { btn.classList.remove('speaking'); currentAudio = null; };
+      audio.onerror = () => {
+        // MP3 not found — fall back to browser TTS
+        currentAudio = null;
+        if (!window.speechSynthesis) return;
+        const u   = new SpeechSynthesisUtterance(a.name);
+        u.rate    = 0.82;
+        u.pitch   = 1.0;
+        u.onstart = () => btn.classList.add('speaking');
+        u.onend   = () => btn.classList.remove('speaking');
+        u.onerror = () => btn.classList.remove('speaking');
+        window.speechSynthesis.speak(u);
+      };
+      audio.play();
     }
 
     // Click / flip wiring for all slots
