@@ -28,11 +28,11 @@
       position: relative;
       /* width drives size; capped by viewport width AND by viewport height via aspect ratio */
       width: min(
-        320px,
+        560px,
         calc(100vw - 48px),
-        calc((100svh - 80px) * 320 / 500)
+        calc((100svh - 80px) * 560 / 415)
       );
-      aspect-ratio: 320 / 500;
+      aspect-ratio: 560 / 415;
       flex-shrink: 0;
     }
 
@@ -68,15 +68,16 @@
       background: #1c1917;
       display: flex;
       flex-direction: column;
-      padding: 20px 20px 22px;
+      padding: 16px 25px 25px;
+      gap: 12px;
     }
 
     .card-top-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
       flex-shrink: 0;
+      padding: 6px 0;
     }
 
     .card-icon { font-size: 1.4rem; line-height: 1; opacity: 0.9; }
@@ -106,19 +107,19 @@
     }
 
     .animal-name {
-      font-size: 2.1rem;
+      flex: 1;
+      font-size: 2.2rem;
       font-weight: 900;
       color: #fff;
       text-transform: uppercase;
       letter-spacing: 0.3px;
       line-height: 1.05;
-      flex-shrink: 0;
       text-align: center;
-      margin-bottom: 14px;
       word-break: break-word;
+      padding: 0 10px;
     }
-    .animal-name.name-long   { font-size: 1.55rem; }
-    .animal-name.name-medium { font-size: 1.8rem; }
+    .animal-name.name-long   { font-size: 1.75rem; }
+    .animal-name.name-medium { font-size: 2.0rem; }
 
     .card-img-box {
       flex: 1;
@@ -149,24 +150,24 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 36px 28px;
+      padding: 24px 40px;
     }
 
-    .fact-icon  { font-size: 2.2rem; margin-bottom: 14px; }
+    .fact-icon  { font-size: 2rem; margin-bottom: 10px; }
 
     .fact-label {
       font-size: 0.65rem;
       letter-spacing: 2.5px;
       text-transform: uppercase;
       color: rgba(255,255,255,0.35);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .fact-text {
-      font-size: 1.05rem;
+      font-size: 1rem;
       color: #fff;
       text-align: center;
-      line-height: 1.72;
+      line-height: 1.65;
       font-weight: 400;
     }
   </style>
@@ -181,9 +182,9 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-d">🦕</span>
+            <div class="animal-name" id="name-d"></div>
             <button class="pronounce-btn" id="pronounce-d" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
-          <div class="animal-name" id="name-d"></div>
           <div class="card-img-box"><img class="animal-img" id="img-d" src="" alt="" /></div>
         </div>
         <div class="face back">
@@ -200,9 +201,9 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-c">🦕</span>
+            <div class="animal-name" id="name-c"></div>
             <button class="pronounce-btn" id="pronounce-c" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
-          <div class="animal-name" id="name-c"></div>
           <div class="card-img-box"><img class="animal-img" id="img-c" src="" alt="" /></div>
         </div>
         <div class="face back">
@@ -219,9 +220,9 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-b">🦕</span>
+            <div class="animal-name" id="name-b"></div>
             <button class="pronounce-btn" id="pronounce-b" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
-          <div class="animal-name" id="name-b"></div>
           <div class="card-img-box"><img class="animal-img" id="img-b" src="" alt="" /></div>
         </div>
         <div class="face back">
@@ -238,9 +239,9 @@
         <div class="face front">
           <div class="card-top-row">
             <span class="card-icon" id="icon-a">🦕</span>
+            <div class="animal-name" id="name-a"></div>
             <button class="pronounce-btn" id="pronounce-a" title="Hear pronunciation"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
           </div>
-          <div class="animal-name" id="name-a"></div>
           <div class="card-img-box"><img class="animal-img" id="img-a" src="" alt="" /></div>
         </div>
         <div class="face back">
@@ -258,9 +259,9 @@
       { name: "Abelisaurus",        image: "images/activewild/Abelisaurus.jpg",        imgClass: "pos-left",  icon: "🦖", fact: "Abelisaurus was a large predator from Argentina with a huge skull but surprisingly tiny arms — even smaller than T. rex! It's known from just one partial skull, making it one of palaeontology's most mysterious carnivores." },
       { name: "Acrocanthosaurus",   image: "images/activewild/Acrocanthosaurus.jpg",   imgClass: "pos-left",  icon: "🦖", fact: "Acrocanthosaurus had a row of tall spines running down its back, forming a muscular ridge like a hump. One of North America's largest predators, it left behind enormous three-toed footprints still visible in Texas today." },
       { name: "Albertosaurus",      image: "images/activewild/Albertosaurus.jpg",      imgClass: "pos-left",  icon: "🦖", fact: "Albertosaurus was a smaller, faster cousin of T. rex that lived 10 million years earlier. Fossils of over 20 individuals found together suggest it may have hunted in packs — a terrifying thought!" },
-      { name: "Allosaurus",         image: "images/activewild/Allosaurus.jpg",         imgClass: "pos-left",  icon: "🦖", fact: "Allosaurus was the T. rex of the Jurassic — 150 million years before T. rex even existed! Its jaw could open nearly 80 degrees wide, and it may have hunted in packs to take down sauropods ten times its size." },
+      { name: "Allosaurus",         image: "images/activewild/Allosaurus.jpg",         imgClass: "pos-right", icon: "🦖", fact: "Allosaurus was the T. rex of the Jurassic — 150 million years before T. rex even existed! Its jaw could open nearly 80 degrees wide, and it may have hunted in packs to take down sauropods ten times its size." },
       { name: "Amargasaurus",       image: "images/activewild/Amargasaurus.jpg",       imgClass: "pos-left",  icon: "🦕", fact: "Amargasaurus had two dramatic rows of tall spines running down its neck and back — unique among all sauropods. Scientists still debate whether they formed a sail, a hump, or were used to make sounds to attract mates." },
-      { name: "Ankylosaurus",       image: "images/activewild/Ankylosaurus.jpg",       imgClass: "pos-left",  icon: "🛡️", fact: "Ankylosaurus was a living tank — its entire back was covered in thick armour plates, even its eyelids! Its solid-bone tail club could swing hard enough to shatter another dinosaur's legs." },
+      { name: "Ankylosaurus",       image: "images/activewild/Ankylosaurus.jpg",       imgClass: "pos-right", icon: "🛡️", fact: "Ankylosaurus was a living tank — its entire back was covered in thick armour plates, even its eyelids! Its solid-bone tail club could swing hard enough to shatter another dinosaur's legs." },
       { name: "Apatosaurus",        image: "images/activewild/Apatosaurus.jpg",        imgClass: "pos-left",  icon: "🦕", fact: "Apatosaurus was so massive that just one of its vertebrae was the size of a car tyre! For over 100 years it was mistakenly displayed in museums with the wrong skull — a case of prehistoric mistaken identity." },
       { name: "Archaeopteryx",      image: "images/activewild/Archaeopteryx.jpg",      imgClass: "pos-left",  icon: "🐦", fact: "Archaeopteryx is the ultimate missing link between dinosaurs and birds! It had feathers and could fly, but also had teeth, wing claws, and a long bony tail — the perfect half-dinosaur, half-bird." },
       { name: "Argentinosaurus",    image: "images/activewild/Argentinosaurus.jpg",    imgClass: "pos-left",  icon: "🦕", fact: "Argentinosaurus may be the largest animal ever to walk the Earth — up to 40 metres long and possibly 80 tonnes. Its individual vertebrae were taller than a grown adult, and each egg was about the size of a rugby ball." },

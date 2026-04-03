@@ -1,0 +1,242 @@
+{
+  "succeeded": [
+    {
+      "name": "Allosaurus",
+      "file": "Allosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 28531
+    },
+    {
+      "name": "Apatosaurus",
+      "file": "Apatosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 33410
+    },
+    {
+      "name": "Archaeopteryx",
+      "file": "Archaeopteryx.mp3",
+      "format": "mp3",
+      "size_bytes": 21561
+    },
+    {
+      "name": "Argentinosaurus",
+      "file": "Argentinosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 40430
+    },
+    {
+      "name": "Brachiosaurus",
+      "file": "Brachiosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 15073
+    },
+    {
+      "name": "Brontosaurus",
+      "file": "Brontosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 20906
+    },
+    {
+      "name": "Deinonychus",
+      "file": "Deinonychus.mp3",
+      "format": "mp3",
+      "size_bytes": 15016
+    },
+    {
+      "name": "Diplodocus",
+      "file": "Diplodocus.mp3",
+      "format": "mp3",
+      "size_bytes": 16167
+    },
+    {
+      "name": "Iguanodon",
+      "file": "Iguanodon.mp3",
+      "format": "mp3",
+      "size_bytes": 32789
+    },
+    {
+      "name": "Megalosaurus",
+      "file": "Megalosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 32285
+    },
+    {
+      "name": "Plateosaurus",
+      "file": "Plateosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 33209
+    },
+    {
+      "name": "Stegosaurus",
+      "file": "Stegosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 36619
+    },
+    {
+      "name": "Therizinosaurus",
+      "file": "Therizinosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 26850
+    },
+    {
+      "name": "Triceratops",
+      "file": "Triceratops.mp3",
+      "format": "mp3",
+      "size_bytes": 29730
+    },
+    {
+      "name": "Tyrannosaurus",
+      "file": "Tyrannosaurus.mp3",
+      "format": "mp3",
+      "size_bytes": 28890
+    },
+    {
+      "name": "Velociraptor",
+      "file": "Velociraptor.mp3",
+      "format": "mp3",
+      "size_bytes": 35676
+    }
+  ],
+  "failed": [
+    {
+      "name": "Abelisaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Acrocanthosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Albertosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Amargasaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Ankylosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Baryonyx",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Carnotaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Ceratosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Chasmosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Coelophysis",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Compsognathus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Corythosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Dilophosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Edmontosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Gallimimus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Giganotosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Gorgosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Herrerasaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Kentrosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Lambeosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Leaellynasaura",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Maiasaura",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Minmi",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Ornithomimus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Oviraptor",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Pachycephalosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Parasaurolophus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Protoceratops",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Spinosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Stegoceras",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Stenonychosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Suchomimus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Tarbosaurus",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Troodon",
+      "reason": "no_audio_on_wikimedia_commons"
+    },
+    {
+      "name": "Utahraptor",
+      "reason": "no_audio_on_wikimedia_commons"
+    }
+  ]
+}
