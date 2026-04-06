@@ -170,6 +170,34 @@
       line-height: 1.65;
       font-weight: 400;
     }
+    @media (max-width: 600px) {
+      body { padding: 12px; align-items: center; }
+
+      .stack-wrapper {
+        width: min(
+          calc(100vw - 24px),
+          calc((100svh - 120px) * 560 / 415)
+        );
+        aspect-ratio: 560 / 415;
+        margin-top: -79px;
+      }
+
+      .front {
+        padding: 13px 17px 17px;
+        gap: 8px;
+      }
+
+      .card-top-row { padding: 2px 0; }
+
+      .animal-name          { font-size: 1.3rem; }
+      .animal-name.name-medium { font-size: 1.15rem; }
+      .animal-name.name-long   { font-size: 0.95rem; }
+
+      .back { padding: 16px 20px; }
+      .fact-text { font-size: 0.85rem; line-height: 1.55; }
+      .fact-icon { font-size: 1.5rem; margin-bottom: 6px; }
+      .fact-label { margin-bottom: 8px; }
+    }
   </style>
 </head>
 <body>
